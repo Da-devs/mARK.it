@@ -22,7 +22,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const { title, url, description } = await req.json();
+        const { title, url, description, author, post_timestamp } = await req.json();
 
         if (!title || !url) {
             return NextResponse.json({ error: "Title and URL are required" }, { status: 400 });
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
         const { data, error } = await supabase
             .from("bookmarks")
-            .insert([{ title, url, description }]);
+            .insert([{ title, url, description, author, post_timestamp }]);
 
         if (error) throw error;
 
