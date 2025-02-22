@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarks Manager</title>
+    <style>
+        body {
+            width: 320px;
+            height: 450px; /* Increased height to accommodate buttons */
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            padding: 15px;
+            background: #f0f7ee;
+            border-radius: 15px; /* More rounded edges */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #000000;
+            transition: background 0.3s; /* Animation for background */
+        }
+        body:hover {
+            background: #e0f0e0; /* Change background on hover */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #5d737e;
+            color: white;
+            padding: 10px;
+            border-radius: 10px; /* More rounded edges */
+        }
+        .sign-in {
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff07c;
+            font-weight: bold;
+        }
+        .bookmarks {
+            margin-top: 15px;
+            background: #87bba2;
+            padding: 10px;
+            border-radius: 10px; /* More rounded edges */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .bookmark-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 5px;
+            background: #dee3e6;
+            border-radius: 5px;
+            transition: background 0.3s; /* Animation for background */
+        }
+        .bookmark-item:hover {
+            background: #d1d1d1; /* Change background on hover */
+        }
+        h2, h3 {
+            margin: 0;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 10px 0;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            margin-top: 15px;
+        }
+        .button {
+            padding: 8px 12px;
+            background: #5d737e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s; /* Animation for button background */
+            margin-bottom: 5px; /* Space between buttons */
+        }
+        .button:hover {
+            background: #4a6065; /* Darker background on hover */
+        }
+    </style>
+    <script src="popup.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <h2>mARK.iT</h2>
+        <a href="signup.html" class="sign-in">Sign In</a>
+    </div>
+    <hr>
+    <h3>Recent Bookmarks</h3>
+    <div class="bookmarks" id="bookmark-list">
+        <!-- Bookmarks will be dynamically added here -->
+    </div>
+    <div class="button-container">
+        <button class="button" id="star-repo">Star Our Repo</button>
+        <button class="button" id="visit-website">Visit Our Website</button>
+        <button class="button" id="sync-bookmarks">Sync Bookmarks</button>
+    </div>
+</body>
+</html>
