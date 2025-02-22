@@ -2,19 +2,38 @@
     "manifest_version": 3,
     "name": "Bookmark Alert",
     "version": "1.0",
-    "description": "Alerts the author's name when a Twitter post is bookmarked.",
+    "description": "Universal bookmark manager across platforms",
     "permissions": [
-        "activeTab"
+      "activeTab"
     ],
     "content_scripts": [
-        {
-            "matches": [
-                "https://x.com/*"
-            ],
-            "js": [
-                "content.js"
-            ],
-            "run_at": "document_end"
+      {
+        "matches": [
+          "https://*.twitter.com/*",
+          "https://*.instagram.com/*",
+          "https://*.x.com/*"
+        ],
+        "js": [
+          "platforms.js",
+          "domObserver.js",
+          "bookmarkHandler.js",
+          "content.js"
+        ],
+        "run_at": "document_end"
+      }
+    ],
+    "action": {
+
+      "default_icon": {
+          "16": "icons/icon16.png",
+          "48": "icons/icon48.png",
+          "128": "icons/icon128.png"
+      }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "bookmarkalert@extension.com",
+            "strict_min_version": "109.0"
         }
-    ]
+    }
 }
