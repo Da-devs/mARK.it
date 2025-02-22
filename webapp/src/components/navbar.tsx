@@ -1,10 +1,11 @@
 "use client";
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Image from 'next/image';
 import { Moon, Sun } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { createClient } from "../app/utils/supabase/client";
 import { signout } from "@/lib/auth-actions";
+import Link from 'next/link';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -15,6 +16,8 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const supabase = createClient();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const handleLogoClick = () => {
     router.push('/');
   };
@@ -23,6 +26,11 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
   };
   const handleLoginClick = () => {
     router.push('/login');
+  };
+  const handleLogout = async () => {
+    await signout();
+    setUser(null);
+    router.replace('/login'); 
   };
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,15 +61,44 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
           )}
         </button>
         {user ? (
-          <button onClick={signout} className='dark:text-white px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800'>Logout</button>
+          <div className="relative" ref={dropdownRef}>
+          {/* <button onClick={signout} className='dark:text-white px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800'>Logout</button> */}
+          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-2 p-2 border rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 transition">
+            <Image
+                src={user.user_metadata.avatar_url || "/profile.png"}
+                alt="Profile"
+                width={32}
+                height={32}
+                className="rounded-full"
+            />
+            <span>{user.user_metadata.full_name || user.email}</span>
+        </button>
+        {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                <div className="py-1">
+                    <Link 
+                        href="/dashboard/overview" 
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        onClick={() => setDropdownOpen(false)}
+                    >
+                        Profile
+                    </Link>
+                    <button 
+                        onClick={handleLogout} 
+                        className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                        Logout 
+                    </button>
+                </div>
+            </div>
+        )}
+        </div>
         ) : (
           <>
             <button onClick={handleLoginClick} className='dark:text-white px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800'>Login</button>
             <button onClick={handleRegisterClick} className='hidden md:block dark:text-white px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800'>Sign Up</button>
           </>
         )}
-        {/* <button onClick={handleLoginClick} className='dark:text-white px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800'>Login</button> */}
-        {/* <button onClick={handleRegisterClick} className='hidden md:block dark:text-white px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800'>Sign Up</button> */}
       </div>
     </nav>
   );
