@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Bookmark Alert",
+    "version": "1.0",
+    "description": "Alerts the author's name when a Twitter post is bookmarked.",
+    "permissions": [
+        "activeTab"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://x.com/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_end"
+        }
+    ]
+}
