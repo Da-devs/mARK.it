@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { space_grotesk, akatab } from "./utils/fonts";
 import Navbar from "@/components/navbar";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-providers";
 
 export const metadata: Metadata = {
   title: "mARK.it",
@@ -14,11 +15,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${space_grotesk.variable} ${akatab.variable}`}>
+    <html suppressHydrationWarning lang="en" className={`${space_grotesk.variable} ${akatab.variable}`}>
       <body className="mt-3 font-fspace_grotesk">
-        <Navbar />
-        {children}
-        {/* <Footer /> */}
+        <ThemeProvider attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange>
+          <Navbar />
+          {children}
+          {/* <Footer /> */}
+        </ThemeProvider>
       </body>
     </html>
   );
