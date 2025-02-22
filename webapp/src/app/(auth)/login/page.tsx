@@ -4,8 +4,12 @@ import { AuthInput } from '@/components/auth/AuthInput';
 import { GoogleButton } from '@/components/auth/GoogleButton';
 import { Divider } from '@/components/auth/Divider';
 import { login, signInWithGoogle } from '@/lib/auth-actions';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/utils/authContext';
 
 const Login: React.FC = () => {
+  const router = useRouter();
+  const { refreshUser } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -26,14 +30,16 @@ const Login: React.FC = () => {
         const formDataToSubmit = new FormData();
         formDataToSubmit.append('email', formData.email);
         formDataToSubmit.append('password', formData.password);
+        
         await login(formDataToSubmit);
+        await refreshUser();
+        router.push('/');
       } catch (error) {
         console.error('Login failed:', error);
       }
     }
   };
-  
-
+    
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -85,7 +91,7 @@ const Login: React.FC = () => {
               </label>
             </div>
 
-            <a href="/forgot-password" className="text-sm hover:text-blue-500">
+            <a href="/forgot-password" className="text-sm dark:text-blue hover:text-blue-500">
               Forgot your password?
             </a>
           </div>

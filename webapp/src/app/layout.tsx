@@ -1,5 +1,6 @@
 "use client"
 import type { Metadata } from "next";
+import { AuthProvider } from "./utils/authContext";
 import { space_grotesk, akatab } from "./utils/fonts";
 import { Navbar } from "@/components/navbar";
 import { useDarkMode } from '../hooks/useDarkMode';
@@ -18,8 +19,10 @@ export default function RootLayout({
         <meta name="description" content="Your bookmarks, simplified." />
       </head>
       <body className="font-fspace_grotesk">
-        <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
-        {children}
+        <AuthProvider>
+          <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
