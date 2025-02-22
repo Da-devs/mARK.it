@@ -12,25 +12,27 @@ const Login: React.FC = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login logic here
     const newErrors: Record<string, string> = {};
-    
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    }
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    }
-
+  
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.password) newErrors.password = 'Password is required';
+  
     setErrors(newErrors);
-
+  
     if (Object.keys(newErrors).length === 0) {
-      // Proceed with login
-      console.log('Login:', formData);
+      try {
+        const formDataToSubmit = new FormData();
+        formDataToSubmit.append('email', formData.email);
+        formDataToSubmit.append('password', formData.password);
+        await login(formDataToSubmit);
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -50,7 +52,7 @@ const Login: React.FC = () => {
         <GoogleButton onClick={signInWithGoogle} />
         <Divider />
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <AuthInput
             label="Email address"
             type="email"
@@ -90,7 +92,6 @@ const Login: React.FC = () => {
 
           <button
             type="submit"
-            formAction={login}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Sign in
