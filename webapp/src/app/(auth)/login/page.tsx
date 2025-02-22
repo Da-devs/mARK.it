@@ -1,20 +1,20 @@
 "use client"
 import React, { useState } from 'react';
-import { AuthInput } from '../../components/auth/AuthInput';
-import { GoogleButton } from '../../components/auth/GoogleButton';
-import { Divider } from '../../components/auth/Divider';
+import { AuthInput } from '@/components/auth/AuthInput';
+import { GoogleButton } from '@/components/auth/GoogleButton';
+import { Divider } from '@/components/auth/Divider';
+import { login, signInWithGoogle } from '@/lib/auth-actions';
 
-const SignUp: React.FC = () => {
+const Login: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    confirmPassword: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your signup logic here
+    // Add your login logic here
     const newErrors: Record<string, string> = {};
     
     if (!formData.email) {
@@ -23,21 +23,13 @@ const SignUp: React.FC = () => {
     if (!formData.password) {
       newErrors.password = 'Password is required';
     }
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Proceed with signup
-      console.log('Sign up:', formData);
+      // Proceed with login
+      console.log('Login:', formData);
     }
-  };
-
-  const handleGoogleSignUp = () => {
-    // Implement Google sign up logic
-    console.log('Google sign up');
   };
 
   return (
@@ -45,23 +37,25 @@ const SignUp: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Create your account
+            Sign in to your account
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Already have an account?{' '}
-            <a href="/login" className="text-blue-600 hover:text-blue-500">
-              Sign in
+            Don't have an account?{' '}
+            <a href="/signup" className="text-blue-600 hover:text-blue-500">
+              Sign up
             </a>
           </p>
         </div>
 
-        <GoogleButton onClick={handleGoogleSignUp} isSignUp />
+        <GoogleButton onClick={signInWithGoogle} />
         <Divider />
 
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6">
           <AuthInput
             label="Email address"
             type="email"
+            name="email"
+            id='email'
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             error={errors.email}
@@ -70,24 +64,36 @@ const SignUp: React.FC = () => {
           <AuthInput
             label="Password"
             type="password"
+            id="password"
+            name='password'
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             error={errors.password}
           />
 
-          <AuthInput
-            label="Confirm Password"
-            type="password"
-            value={formData.confirmPassword}
-            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-            error={errors.confirmPassword}
-          />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+                Remember me
+              </label>
+            </div>
+
+            <a href="/forgot-password" className="text-sm hover:text-blue-500">
+              Forgot your password?
+            </a>
+          </div>
 
           <button
             type="submit"
+            formAction={login}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            Sign up
+            Sign in
           </button>
         </form>
       </div>
@@ -95,4 +101,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default Login;

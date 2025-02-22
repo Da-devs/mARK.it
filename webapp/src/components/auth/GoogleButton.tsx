@@ -9,7 +9,7 @@ export const GoogleButton: React.FC<GoogleButtonProps> = ({ onClick, isSignUp = 
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+      className="w-full flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 dark:text-white dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">
         <path
