@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Bookmark Alert",
+  "name": "mARK.it - Universal bookmark manager",
   "version": "1.0",
   "description": "Universal bookmark manager across platforms",
   "permissions": [
-    "activeTab"
+    "activeTab", "tabs"
   ],
   "content_scripts": [
     {
@@ -18,12 +18,14 @@
         "domObserver.js",
         "bookmarkHandler.js",
         "showPopup.js",
-        "content.js"
+        "content.js",
+        "config.js"
       ],
       "run_at": "document_end"
     }
   ],
   "action": {
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",

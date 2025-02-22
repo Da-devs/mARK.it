@@ -13,16 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     // Fetch bookmarks from storage and display them
-    function displayBookmarks() {
-      chrome.storage.local.get(['bookmarks'], (result) => {
-        const bookmarks = result.bookmarks || [];
-        bookmarkList.innerHTML = ''; // Clear existing bookmarks
-        bookmarks.forEach(bookmark => {
-          const item = createBookmarkItem(bookmark);
-          bookmarkList.appendChild(item);
-        });
-      });
-    }
+    // function displayBookmarks() {
+    //   chrome.storage.local.get(['bookmarks'], (result) => {
+    //     const bookmarks = result.bookmarks || [];
+    //     bookmarkList.innerHTML = ''; // Clear existing bookmarks
+    //     bookmarks.forEach(bookmark => {
+    //       const item = createBookmarkItem(bookmark);
+    //       bookmarkList.appendChild(item);
+    //     });
+    //   });
+    // }
   
     // Add event listeners to buttons
     document.getElementById('star-repo').addEventListener('click', () => {
@@ -37,7 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // Logic to sync bookmarks can be added here
       alert('Syncing bookmarks...');
     });
+    
+    document.getElementById('sign-in').addEventListener('click', () => {
+      alert('Sign in...');
+      window.open("http://localhost:3000" + "/login", '_blank');
+    });
+    
   
     // Display bookmarks on load
-    displayBookmarks();
+    // displayBookmarks();
   });
