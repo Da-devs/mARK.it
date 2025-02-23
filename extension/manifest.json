@@ -7,7 +7,8 @@
     "activeTab", "tabs", "bookmarks", "*://localhost/*", "contextMenus", "storage"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "externally_connectable": {
     "matches": [
@@ -26,14 +27,14 @@
         "*://localhost/*"
       ],
       "js": [
+        "config.js",
         "platforms.js",
         "domObserver.js",
         "bookmarkHandler.js",
         "showPopup.js",
         "popup.js",
-        "content.js",
-        "popup.js",
-        "config.js"
+        "background.js",
+        "content.js"
       ],
       "run_at": "document_end"
     }

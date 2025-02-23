@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { GoogleButton } from '@/components/auth/GoogleButton';
 import { Divider } from '@/components/auth/Divider';
@@ -15,6 +15,17 @@ const Login: React.FC = () => {
     password: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [extensionStatus, setExtensionStatus] = useState<'synced' | 'failed' | null>(null);
+
+  useEffect(() => {
+    // Check extension sync status
+    const syncStatus = localStorage.getItem('extensionSynced');
+    if (syncStatus === 'true') {
+      setExtensionStatus('synced');
+    } else if (syncStatus === 'false') {
+      setExtensionStatus('failed');
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +47,7 @@ const Login: React.FC = () => {
         router.push('/');
       } catch (error) {
         console.error('Login failed:', error);
+        setErrors({ submit: 'Login failed. Please try again.' });
       }
     }
   };
@@ -103,6 +115,11 @@ const Login: React.FC = () => {
             Sign in
           </button>
         </form>
+          {extensionStatus === 'failed' && (
+        <div className="text-red-500 text-sm mt-2">
+          Failed to sync with extension. Please try reinstalling the extension.
+        </div>
+      )}
       </div>
     </div>
   );
