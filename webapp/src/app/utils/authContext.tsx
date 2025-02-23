@@ -67,12 +67,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (_event === 'SIGNED_OUT') {
         setUser(null);
         localStorage.removeItem('userUUID');
+        localStorage.removeItem('sessionToken');
         localStorage.removeItem('extensionSynced');
       } else if (session?.user) {
         console.log("Session", session);
         setUser(session.user);
         localStorage.setItem('userUUID', session.user.id);
         setSessionToken(session.access_token);
+        localStorage.setItem('sessionToken', session.access_token);
         console.log("Session Token", session.access_token);
         await syncWithExtension(session.user);
       }
