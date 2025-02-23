@@ -1,7 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import { useDarkMode } from '../hooks/useDarkMode';
-import { Navbar } from '../components/navbar';
 import { Sidebar } from '../components/Sidebar';
 import { MobileNav } from '../components/MobileNav';
 import { SearchBar } from '../components/SearchBar';
@@ -12,7 +10,6 @@ import { initialCategories } from '../data/categories';
 import { Item } from '../types/index';
 
 function App() {
-  const { darkMode, setDarkMode } = useDarkMode();
   const [items] = useState<Item[]>(demoItems);
   const [categories] = useState(initialCategories);
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,9 +42,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} /> */}
-      
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">      
       <div className="md:flex">
 
         <Sidebar
