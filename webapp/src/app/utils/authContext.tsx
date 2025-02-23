@@ -18,6 +18,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session_token, setSessionToken] = useState<string | null>(null);
   const supabase = createClient();
 
   const syncWithExtension = async (user: User) => {
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // Send message to extension
       const response = await chrome.runtime.sendMessage(extensionId, { 
         uuid: user.id,
+        session_token: session_token,
         email: user.email,
         timestamp: Date.now()
       });
@@ -67,8 +69,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.removeItem('userUUID');
         localStorage.removeItem('extensionSynced');
       } else if (session?.user) {
+        console.log("Session", session);
         setUser(session.user);
         localStorage.setItem('userUUID', session.user.id);
+        setSessionToken(session.access_token);
+        console.log("Session Token", session.access_token);
         await syncWithExtension(session.user);
       }
     });
