@@ -1,107 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookmarks Manager</title>
+    <title>mARK.it Extension</title>
     <style>
         body {
-            width: 320px;
-            height: 450px; /* Increased height to accommodate buttons */
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            width: 300px;
+            height: 450px;
+            margin: 0;
             padding: 15px;
-            background: #f0f7ee;
-            border-radius: 15px; /* More rounded edges */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            color: #000000;
-            transition: background 0.3s; /* Animation for background */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a202c;
+            border-radius: 12px;
+            color: #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        body:hover {
-            background: #e0f0e0; /* Change background on hover */
-        }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #5d737e;
-            color: white;
-            padding: 10px;
-            border-radius: 10px; /* More rounded edges */
+            padding: 12px 15px;
+            background: #2d3748;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-        .sign-in {
-            cursor: pointer;
-            text-decoration: none;
-            color: #fff07c;
-            font-weight: bold;
-        }
-        .bookmarks {
-            margin-top: 15px;
-            background: #87bba2;
-            padding: 10px;
-            border-radius: 10px; /* More rounded edges */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .bookmark-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            padding: 5px;
-            background: #dee3e6;
-            border-radius: 5px;
-            transition: background 0.3s; /* Animation for background */
-        }
-        .bookmark-item:hover {
-            background: #d1d1d1; /* Change background on hover */
-        }
-        h2, h3 {
+
+        .header h2 {
             margin: 0;
-        }
-        hr {
-            border: 0;
-            height: 1px;
-            background: #ccc;
-            margin: 10px 0;
-        }
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        .button-container {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #fff;
             display: flex;
-            flex-direction: column; /* Stack buttons vertically */
-            margin-top: 15px;
+            align-items: center;
+            gap: 10px;
+            /* Space between title and sign-in button */
         }
-        .button {
-            padding: 8px 12px;
-            background: #5d737e;
+
+        .sign-in {
+            padding: 6px 12px;
+            background: #4a90e2;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9em;
             cursor: pointer;
-            transition: background 0.3s; /* Animation for button background */
-            margin-bottom: 5px; /* Space between buttons */
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
         }
+
+        .sign-in:hover {
+            background: #357abd;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+        }
+
+        .search-bar {
+            width: 100%;
+            /* Ensure it takes full width of the container */
+            padding: 8px 15px;
+            margin-bottom: 15px;
+            background: #2d3748;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #e2e8f0;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            /* Include padding in width calculation */
+        }
+
+        .search-bar::placeholder {
+            color: #a0aec0;
+        }
+
+        .bookmarks {
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 5px;
+            background: #2d3748;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bookmark-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #4a5568;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .bookmark-item:hover {
+            background: #5a6a82;
+            transform: translateX(2px);
+        }
+
+        .bookmark-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            fill: #a0aec0;
+        }
+
+        .bookmark-title {
+            flex-grow: 1;
+            font-size: 0.9em;
+            color: #e2e8f0;
+        }
+
+        .bookmark-url {
+            font-size: 0.8em;
+            color: #a0aec0;
+            margin-left: 5px;
+        }
+
+        .button-container {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .button {
+            flex: 1;
+            padding: 8px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+        }
+
         .button:hover {
-            background: #4a6065; /* Darker background on hover */
+            background: #357abd;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Scrollbar Styling */
+        .bookmarks::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .bookmarks::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 10px;
+        }
+
+        .bookmarks::-webkit-scrollbar-track {
+            background: transparent;
         }
     </style>
     <script src="popup.js" defer></script>
 </head>
+
 <body>
     <div class="header">
-        <h2>mARK.iT</h2>
-        <!-- <a href="${CONFIG.API_BASE_URL}/login" class="sign-in">Sign In</a> -->
-        <button class="button" id="sign-in">Sign In</button>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <h2>mARK.it</h2>
+            <button class="sign-in" id="sign-in">Sign In</button>
+        </div>
     </div>
-    <hr>
-    <h3>Recent Bookmarks</h3>
+    <input type="text" class="search-bar" placeholder="Search bookmarks..." id="search-bookmarks">
     <div class="bookmarks" id="bookmark-list">
-        <!-- Bookmarks will be dynamically added here -->
+        placeholder
     </div>
     <div class="button-container">
-        <button class="button" id="star-repo">Star Our Repo</button>
-        <button class="button" id="visit-website">Visit Our Website</button>
-        <button class="button" id="sync-bookmarks">Sync Bookmarks</button>
+        <button class="button" id="star-repo">Star Repo</button>
+        <button class="button" id="sync-bookmarks">Sync</button>
+        <button class="button" id="visit-website">Visit Site</button>
     </div>
 </body>
+
 </html>

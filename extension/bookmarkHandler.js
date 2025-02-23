@@ -18,36 +18,36 @@ class BookmarkHandler {
     if (!container) return;
 
     const metadata = this.config.metadata(container);
-    
+
     if (!metadata?.url) {
-        console.warn("No valid bookmark URL detected");
-        return;
+      console.warn("No valid bookmark URL detected");
+      return;
     }
 
     console.log('Bookmark detected:', metadata);
     console.log('Bookmark Link:', metadata.url);
 
-    showPopup(); 
+    showPopup();
 
     try {
-        const response = await fetch(`${CONFIG.API_BASE_URL}/bookmarks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(metadata),
-        });
+      const response = await fetch(`${CONFIG.API_BASE_URL}/bookmarks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(metadata),
+      });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-        const data = await response.json();
-        console.log('Bookmark saved:', data);
+      const data = await response.json();
+      console.log('Bookmark saved:', data);
     } catch (error) {
-        console.error('Failed to save bookmark:', error);
+      console.error('Failed to save bookmark:', error);
     }
-}
+  }
 
 
   addBookmarkListeners() {

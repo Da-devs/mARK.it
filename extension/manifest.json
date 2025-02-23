@@ -4,14 +4,15 @@
   "version": "1.0",
   "description": "Universal bookmark manager across platforms",
   "permissions": [
-    "activeTab", "tabs"
+    "activeTab", "tabs", "bookmarks", "storage"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://*.instagram.com/*",
         "https://*.x.com/*",
-        "https://*.reddit.com/*"
+        "https://*.gitlab.com/*",
+        "https://*.github.com/*"
       ],
       "js": [
         "platforms.js",
@@ -19,6 +20,7 @@
         "bookmarkHandler.js",
         "showPopup.js",
         "content.js",
+        "popup.js",
         "config.js"
       ],
       "run_at": "document_end"
