@@ -2,7 +2,7 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createClient } from "@/app/utils/supabase/client";
-import { User } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
@@ -18,7 +18,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session_token, setSessionToken] = useState<string | null>(null);
+  const [session_token, setSessionToken] = useState<Session | null>(null);
   const supabase = createClient();
 
   const syncWithExtension = async (user: User) => {
@@ -73,9 +73,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("Session", session);
         setUser(session.user);
         localStorage.setItem('userUUID', session.user.id);
-        setSessionToken(session.access_token);
+        setSessionToken(session);
         localStorage.setItem('sessionToken', session.access_token);
-        console.log("Session Token", session.access_token);
         await syncWithExtension(session.user);
       }
     });
