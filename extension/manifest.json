@@ -4,21 +4,33 @@
   "version": "1.0",
   "description": "Universal bookmark manager across platforms",
   "permissions": [
-    "activeTab", "tabs", "bookmarks", "storage"
+    "activeTab", "tabs", "bookmarks", "*://localhost/*", "contextMenus", "storage"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*"
+    ],
+    "accepts_tls_channel_id": true
+  },
   "content_scripts": [
     {
       "matches": [
         "https://*.instagram.com/*",
         "https://*.x.com/*",
         "https://*.gitlab.com/*",
-        "https://*.github.com/*"
+        "https://*.github.com/*",
+        "https://*.reddit.com/*",
+        "*://localhost/*"
       ],
       "js": [
         "platforms.js",
         "domObserver.js",
         "bookmarkHandler.js",
         "showPopup.js",
+        "popup.js",
         "content.js",
         "popup.js",
         "config.js"
