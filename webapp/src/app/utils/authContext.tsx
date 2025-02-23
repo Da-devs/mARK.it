@@ -2,7 +2,7 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createClient } from "@/app/utils/supabase/client";
-import { User } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
@@ -12,12 +12,13 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  refreshUser: async () => {},
-  syncWithExtension: async () => {},
+  refreshUser: async () => { },
+  syncWithExtension: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session_token, setSessionToken] = useState<Session | null>(null);
   const supabase = createClient();
 
   const syncWithExtension = async (user: User) => {
@@ -32,15 +33,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      // Send message to extension
-      const response = await chrome.runtime.sendMessage(extensionId, { 
-        uuid: user.id,
-        email: user.email,
-        timestamp: Date.now()
-      });
-
-      console.log('Extension sync response:', response);
-      
       // Store sync status
       localStorage.setItem('extensionSynced', 'true');
     } catch (error) {
@@ -65,11 +57,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (_event === 'SIGNED_OUT') {
         setUser(null);
         localStorage.removeItem('userUUID');
+        localStorage.removeItem('sessionToken');
         localStorage.removeItem('extensionSynced');
       } else if (session?.user) {
+        console.log("Session", session);
         setUser(session.user);
         localStorage.setItem('userUUID', session.user.id);
+        setSessionToken(session);
+        localStorage.setItem('sessionToken', session.access_token);
         await syncWithExtension(session.user);
+        // Send message to extension
+        await chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_EXTENSION_ID, {
+          uuid: session.user.id,
+          session_token: session.access_token
+        });
       }
     });
 

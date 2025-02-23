@@ -19,7 +19,8 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
     const authData = {
       uuid: message.uuid,
       timestamp: Date.now(),
-      origin: sender.url
+      origin: sender.url,
+      session_token: message.session_token
     };
     
     chrome.storage.local.set({ authData }, () => {
