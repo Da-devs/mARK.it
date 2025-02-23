@@ -6,12 +6,14 @@ import { Session, User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
+  session_token: Session | null;
   refreshUser: () => Promise<void>;
   syncWithExtension: (user: User) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  session_token: null,
   refreshUser: async () => { },
   syncWithExtension: async () => { },
 });
@@ -78,7 +80,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, refreshUser, syncWithExtension }}>
+    <AuthContext.Provider value={{ user, session_token, refreshUser, syncWithExtension }}>
       {children}
     </AuthContext.Provider>
   );
