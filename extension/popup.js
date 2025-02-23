@@ -1,31 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const bookmarkList = document.getElementById('bookmark-list');
-
   const browserAPI = typeof chrome !== 'undefined' ? chrome : browser;
+  const signInButton = document.getElementById('sign-in');
 
-  // Function to create a bookmark item element
-  function createBookmarkItem(bookmark) {
-    const item = document.createElement('div');
-    item.className = 'bookmark-item';
-    item.innerHTML = `
-        <span>${bookmark.title}</span>
-        <a href="${bookmark.url}" target="_blank">Visit</a>
-      `;
-    return item;
+  // Function to replace sign-in button with avatar
+  function displayUserAvatar(avatarUrl) {
+    if (avatarUrl) {
+      const avatarImg = document.createElement('img');
+      avatarImg.src = avatarUrl;
+      avatarImg.className = 'avatar';
+      avatarImg.alt = 'User Avatar';
+      signInButton.replaceWith(avatarImg);
+    }
   }
 
-  // Fetch bookmarks from storage and display them
-  // function displayBookmarks() {
-  //   chrome.storage.local.get(['bookmarks'], (result) => {
-  //     const bookmarks = result.bookmarks || [];
-  //     bookmarkList.innerHTML = ''; // Clear existing bookmarks
-  //     bookmarks.forEach(bookmark => {
-  //       const item = createBookmarkItem(bookmark);
-  //       bookmarkList.appendChild(item);
-  //     });
-  //   });
-  // }
+  // Fetch user avatar with a GET request
+  async function fetchUserAvatar() {
+    try {
+      const response = await fetch('http://localhost:3000/api/user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any authentication headers if needed, e.g.:
+          'Authorization': `Bearer ${token}`
+        },
+        credentials: 'include' // Include cookies if your auth uses them
+      });
 
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+
+      const userData = await response.json();
+      const avatarUrl = userData.avatar; // Adjust based on your API response structure
+      displayUserAvatar(avatarUrl);
+    } catch (error) {
+      console.error('Error fetching user avatar:', error);
+      // Keep the sign-in button if fetch fails (e.g., user not signed in)
+    }
+  }
+
+  // Call the fetch function on load
+  fetchUserAvatar();
+
+  // Function to fetch browser bookmarks
   async function getBrowserBookmarks() {
     try {
       const bookmarkTreeNodes = await browserAPI.bookmarks.getTree();
@@ -54,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Function to save bookmarks to a JSON file
   function saveBookmarksToFile(bookmarks) {
     const jsonContent = JSON.stringify(bookmarks, null, 2);
     const blob = new Blob([jsonContent], { type: 'application/json' });
@@ -83,20 +101,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bookmarks.length > 0) {
       saveBookmarksToFile(bookmarks);
       browserAPI.storage.local.set({ bookmarks: bookmarks }, () => {
+<<<<<<< Updated upstream
         // displayBookmarks();
         console.log(`Successfully synced ${bookmarks.length} bookmarks! File saved as JSON.`);
+=======
+        alert(`Successfully synced ${bookmarks.length} bookmarks! File saved as JSON.`);
+>>>>>>> Stashed changes
       });
     } else {
       console.log('No bookmarks found to sync.');
     }
   });
 
+<<<<<<< Updated upstream
   document.getElementById('sign-in').addEventListener('click', () => {
     console.log('Sign in...');
     window.open("http://localhost:3000" + "/login", '_blank');
+=======
+  signInButton.addEventListener('click', () => {
+    alert('Sign in...');
+    window.open('http://localhost:3000/login', '_blank');
+>>>>>>> Stashed changes
   });
-
-
-  // Display bookmarks on load
-  // displayBookmarks();
 });
