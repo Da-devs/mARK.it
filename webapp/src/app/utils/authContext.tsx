@@ -12,8 +12,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  refreshUser: async () => {},
-  syncWithExtension: async () => {},
+  refreshUser: async () => { },
+  syncWithExtension: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -33,16 +33,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      // Send message to extension
-      const response = await chrome.runtime.sendMessage(extensionId, { 
-        uuid: user.id,
-        session_token: session_token,
-        email: user.email,
-        timestamp: Date.now()
-      });
-
-      console.log('Extension sync response:', response);
-      
       // Store sync status
       localStorage.setItem('extensionSynced', 'true');
     } catch (error) {
@@ -76,6 +66,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setSessionToken(session);
         localStorage.setItem('sessionToken', session.access_token);
         await syncWithExtension(session.user);
+        // Send message to extension
+        await chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_EXTENSION_ID, {
+          uuid: session.user.id,
+          session_token: session.access_token
+        });
       }
     });
 

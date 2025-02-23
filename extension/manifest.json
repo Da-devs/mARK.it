@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Universal bookmark manager across platforms",
   "permissions": [
-    "activeTab", "tabs", "bookmarks", "*://localhost/*", "contextMenus", "storage"
+    "activeTab", "tabs", "bookmarks", "contextMenus", "storage"
   ],
   "background": {
     "service_worker": "background.js",

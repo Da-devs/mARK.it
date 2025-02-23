@@ -28,27 +28,32 @@ class BookmarkHandler {
     console.log('Bookmark Link:', metadata.url);
 
     showPopup();
-
-    try {
-      const response = await fetch(`${CONFIG.API_BASE_URL}/bookmarks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(metadata),
+    chrome.storage.local.get(['authData']).then(async (result) => {
+      try {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/bookmarks`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'apikey': `${CONFIG.ANON_KEY}`,
+              'Authorization': `Bearer ${result.authData.session_token}`
+          },
+          body: JSON.stringify({
+              ...metadata, // Spread existing metadata
+              user_id: result.authData.uuid // Add user_id from authData
+          }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Bookmark saved:', data);
+      } catch (error) {
+        console.error('Failed to save bookmark:', error);
       }
-
-      const data = await response.json();
-      console.log('Bookmark saved:', data);
-    } catch (error) {
-      console.error('Failed to save bookmark:', error);
-    }
+    });
   }
-
 
   addBookmarkListeners() {
     if (!this.config) return;
