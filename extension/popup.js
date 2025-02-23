@@ -84,15 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
       saveBookmarksToFile(bookmarks);
       browserAPI.storage.local.set({ bookmarks: bookmarks }, () => {
         // displayBookmarks();
-        alert(`Successfully synced ${bookmarks.length} bookmarks! File saved as JSON.`);
+        console.log(`Successfully synced ${bookmarks.length} bookmarks! File saved as JSON.`);
       });
     } else {
-      alert('No bookmarks found to sync.');
+      console.log('No bookmarks found to sync.');
     }
   });
 
   document.getElementById('sign-in').addEventListener('click', () => {
-    alert('Sign in...');
+    console.log('Sign in...');
     window.open("http://localhost:3000" + "/login", '_blank');
   });
 
