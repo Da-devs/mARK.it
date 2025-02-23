@@ -1,80 +1,133 @@
-# mARK.it - The Ultimate Bookmark Manager
+<div align="center">
 
-## Project Description
-mARK.it is a **hybrid bookmark management system** that helps users **capture**, **organize**, and **synchronize** bookmarks from various platforms into a single, centralized interface. With a browser extension for easy bookmarking and a web app for advanced organization, Mark.it ensures that users never lose track of important links. With mARK.it, your bookmarks aren’t just saved—they’re seamlessly connected, intelligently organized, and instantly accessible, anytime, anywhere.
+  <h1>
+    <img src="extension\icons\icon128.png" width="90" height="90" alt="Bookmark Manager Logo"/><br/>
+    mARK.IT
+  </h1>
 
-## Problem Statement
-Managing bookmarks across multiple platforms is a **chaotic** and **fragmented experience**:
-- Browser bookmarks are **limited to a single device** unless synced manually.
-- Social media platforms (Twitter, Instagram, Reddit) **do not offer an easy way to export saved links**.
-- Users end up **losing track of saved links** due to disorganization.
-- Manually importing/exporting bookmarks is tedious.
+> mARK.it is a hybrid bookmark management system that helps users capture, organize, and synchronize bookmarks from various platforms into a single, centralized interface.
 
-mARK.it solves this problem by providing a **seamless browser extension** for capturing bookmarks and a **web app** for managing, organizing, and searching saved links.
+  <p>
+    <a href="https://github.com/Da-devs/mARK.it/blob/main/LICENSE">
+      <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Bookmark Manager is released under the MIT license." />
+    </a>
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </p>
 
-## Key Features
-### Browser Extension (Capture Bookmarks Easily)
-- One-click bookmarking for any website.
-- Automatically saves URL, title, and metadata.
-- Works on Chrome, Firefox, and Edge.
-- Sends bookmarks directly to the web app.
+  <p>
+    <a href="#features">Features</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#getting-started">Getting Started</a> •
+    <a href="#docs">Docs</a> •
+    <a href="#ecosystem">Ecosystem</a>
+  </p>
+</div>
 
-### Web App (Organize & Manage Bookmarks)
-- View and search bookmarks in a clean UI.
-- Supports tagging, categorization, and filtering.
-- Import bookmarks from Chrome, Firefox, and JSON/CSV files.
+---
 
-### Sync & Export
-- Auto-sync bookmarks between extension and web app.
-- Export bookmarks in multiple formats (HTML, JSON, CSV).
-- Offline support - access saved bookmarks without internet.
+##  Features
+
+## 🚀 Browser Extension (Capture Bookmarks Easily)  
+- One-click bookmarking for any website.  
+- Automatically saves URL, title, and metadata.  
+- Works on **Chrome, Firefox, and Edge**.  
+- Sends bookmarks directly to the web app.  
+
+## 🗂 Web App (Organize & Manage Bookmarks)  
+- Clean UI for viewing and searching bookmarks.  
+- Supports **tagging, categorization, and filtering**.  
+- Import bookmarks from **Chrome, Firefox, and JSON/CSV files**.  
+
+## 🔄 Sync & Export  
+- **Auto-sync** between browser extension and web app.  
+- Export bookmarks in **HTML, JSON, and CSV** formats.  
+- **Offline support** – access saved bookmarks without internet. 
+
+---
 
 ## Tech Stack
-- **Browser Extension** - Manifest V3 (Chrome & Firefox), JavaScript
-- **Frontend (Web App)** - Next.js
-- **Backend API** - FastAPI (Python)
-- **Database** - SQLite
 
-## Why mARK.it stands out?
-mARK.it is a truly **open-source**, **self-hosted**, and **privacy-focused bookmark manager**, making it the perfect alternative to closed-source bookmark services. With **minimal reliance on third-party APIs**, it's built for hackers, researchers, and productivity enthusiasts alike!
 
-# Checklist
+### 🌐 Browser Extension  
+- **Tech:** Manifest V3, JavaScript  
+- **Supported Browsers:** Chrome & Firefox  
 
-## Setup & Installation
-- [x] Clone the repository
-- [x] Install dependencies for both `extension/` and `webapp/`
-- [ ] Run development servers:
-  - [ ] Web app (`webapp/`): `npm run dev`
-  - [ ] Load extension in Chrome as an unpacked extension
+### 🎨 Frontend (Web App)  
+- **Framework:** [Next.js](https://nextjs.org)  
+- **Styling:** [React](https://reactjs.org), [Tailwind CSS](https://tailwindcss.com)  
 
-## Browser Extension Development
-- [ ] Implement `manifest.json` with required permissions
-- [ ] Configure Webpack for bundling
-- [ ] Create content scripts for social media monitoring
-- [ ] Develop background scripts for event handling and API requests
-- [ ] Build popup UI for quick bookmark management
+### 🖥 Backend & Storage  
+- **API Framework:** [Supabase](https://supabase.com)(Open Shource Alternative for Firebase)  
+- **Database:** [Supabase](https://supabase.com) (PostgreSQL, Auth, Realtime)
 
-## Web App Development (Next.js)
-- [ ] Initialize Next.js app and configure `next.config.js`
-- [ ] Develop core pages:
-  - [ ] Home (`index.tsx`)
-  - [ ] Dashboard (`dashboard.tsx`)
-  - [ ] Settings (`settings.tsx`)
-- [ ] Create reusable components:
-  - [ ] `BookmarkList.tsx`
-  - [ ] `Sidebar.tsx`
-- [ ] Implement API routes for bookmark management (`api/bookmarks.ts`)
+### 🛠 Tooling  
+- **CLI Tools:** [Supabase CLI](https://supabase.com/docs/reference/cli/introduction)  
 
-## Integration & Testing
-- [ ] Connect browser extension with web app via API calls
-- [ ] Sync bookmark data between extension and web app
-- [ ] Perform unit tests on components
-- [ ] Conduct end-to-end testing
-- [ ] Debug any issues (API calls, permissions, etc.)
 
-## Deployment & Optimization
-- [ ] Optimize performance (minimize API calls, lazy loading, caching)
-- [ ] Secure authentication tokens and sensitive data
-- [ ] Deploy web app (e.g., on Vercel)
-- [ ] Package and publish the Chrome extension
-- [ ] Monitor user feedback and iterate with improvements
+---
+
+## Screenshots
+
+| **Dashboard (Dark Mode)** <br/><img src="static\dark_theme.png" width="400" alt="Dashboard Dark Mode" /> | **Dashboard (Light Mode)** <br/><img src="static\light_theme.png" width="400" alt="Dashboard Light Mode" /> |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Extension UI** <br/><img src="static\extension_ui.png" width="400" alt="Extension UI" />                | **Search Bookmarks** <br/><img src="static\search.png" width="400" alt="Search Bookmarks" /> |
+
+---
+
+| <img src="static/mobile_res_login.png" width="200" alt="Login Page" /> | <img src="static/mobile_res.png" width="200" alt="Mobile Responsive" /> |
+|:---:|:---:|
+| **Login Page** | **Mobile Responsive** |
+
+## 🎯 Getting Started
+
+### 📌 Prerequisites
+
+- [Node.js](https://nodejs.org) (v14+)
+- [npm](https://www.npmjs.com/)
+- [Supabase](https://supabase.com) account
+---
+
+### ⚡ Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   https://github.com/Da-devs/mARK.it.git
+   cd mARK.it
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Create a Supabase account**
+   - Go to [Supabase](https://supabase.com) and sign up for a free account.
+   - Create a new project in the Supabase dashboard.
+   - Note down the `API URL` and `anon key` from the project settings.
+
+   
+4. **Set up environment variables**
+   - Create a `.env.local` file in the `mark.it` directory.
+   - Add your Supabase credentials to the `.env.local` file:
+     ```env
+     NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+     NEXT_PUBLIC_EXTENSION_ID=your-extension-id
+     ```
+
+5. **Configure the application**
+   - Update the `config.js` file with your Supabase details:
+     ```javascript
+     const CONFIG = {
+         ROOT_URL: "http://localhost:3000",
+         API_BASE_URL: "YOUR-SUPABASE_API_URL",
+         ANON_KEY: "YOUR-NEXT_PUBLIC_SUPABASE_ANON_KEY"
+     };
+     ```
+
+6. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+7. **Open your browser**
+   - Navigate to `http://localhost:3000` to see the web app.
